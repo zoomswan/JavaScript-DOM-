@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Image Galler</title>
+  <style type="text/css">
+  body{
+    font-family: "Helvetica" , "Arial" ,serif;
+    color: rgb(40, 102, 10);/*页面文本颜色*/
+    background-color: #CCC;
+    margin: 1em 10%;
+  }
+  h1{
+    color: #333;
+    background-color: transparent;/*背景透明*/
+  }
+  a{
+    color:#333;/*黑体 */
+    background-color: transparent;/*背景透明*/
+    font-weight: bold;/*文本粗体*/
+    text-decoration: none;/*删除下划线*/
+  }
+  ul{
+    padding: 0;
+  }
+  li{
+    float: left;/*加浮动 全部变成行内元素  像左浮动  一排*/
+    /*做一个导航，最常用的就是无序列表来做，给每个li左浮动就排成一列啊*/
+    padding: 1em;
+    list-style: none;/*清楚小圆点*/
+  }
+  img{
+    display:block;/*变成块级元素*/
+    clear: both;/*清楚浮动 就往下移一行*/
+  }
+  </style>
+</head>
+<body>
+<h1>Snapshots</h1>
+<ul id="imagegallery">
+  <li><a href="./image/ba-image.jpg"   title="A fireworks display">fireworks</a></li>
+  <li><a href="./image/ba-mimimi.jpg"   title="A cup of black coffee">coffee</a></li>
+  <li><a href="./image/bg_footer.png"   title="A red ,red Rose">Rose</a></li>
+  <li><a href="./image/Cattyboard.jpg"   title=" The famous clock">big ben</a></li>
+</ul>
+<img id="placeholder" src="./image/gakki.jpg" alt="my image gallery" />
+<p id="description">Choose an image</p>
+<script type="text/javascript">
+  function showPic(whichPic) {
+  var source = whichPic.getAttribute("href");//whichPic 就是 元素a
+  var placeholder = document.getElementById("placeholder");//得到占位符图片
+  placeholder.setAttribute("src",source);//给占位符 ，添加新属性 新属性值 ,其实换图片
+//document.getElementById("placeholder").setAttribute("src" ,whichPic.getAttribute("href"));
+//不仅切换图片，还要切换图片的描述title属性。
+  var text = whichPic.getAttribute("title");//获取title属性 提取保存 赋值给变量text   ||其实就是获取A元素属性为title的值
+  var description = document.getElementById("description");//获取到元素id  赋值给变量description ||其实这个变量代表那个元素P
+  description.firstChild.nodeValue = text  ;//把description对象的第一个节点的nodeValue属性值设置为text的值。
+  //元素P的 子节点 的值（文本节点）  =  a元素属性title的值 赋值给左边。||
+
+  }
+</script>
+<script type="text/javascript">
+  function countBodyChildren() {
+    var body_element = document.getElementsByTagName("body")[0];//找到body元素
+    console.log(body_element.childNodes.length);  //输出body的全部子元素长度 =>11个
+  }
+window.onload= countBodyChildren;//页面加载时，执行
+</script>
+<script type="text/javascript">
+  function prepareGallery(){
+    if(!document.getElementsByTagName) { return false};//检测浏览器支不支持的语法
+    if(!document.getElementById) {return false};
+    if(!document.getElementById("imagegallery")){ return false};
+    var gallery = document.getElementById("imagegallery");
+    var links = gallery.getElementsByTagName("a");
+    //接下来 遍历数组links 里面的a元素
+    for (var i = 0; i < links.length; i++) {
+      links[i].onclick = function(){
+        showPic(this);//点击就会执行
+        return false;//调用这个函数，就会把onclick事件绑定到各种a标签上
+      }
+    }
+  }
+window.onload = prepareGallery;
+</script>
+</body>
+</html>
